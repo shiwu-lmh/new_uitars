@@ -403,8 +403,35 @@ function parseAction(actionStr: string) {
     const kwargs = {};
 
     if (argsStr.trim()) {
-      // Split on commas that aren't inside quotes or parentheses
-      const argPairs = argsStr.match(/([^,']|'[^']*')+/g) || [];
+      // Split on commas that aren't inside quotes, parentheses, or coordinate arrays.
+      // Qwen sometimes emits start_box=[368, 149, 507, 172] without quotes.
+      const argPairs: string[] = [];
+      let current = '';
+      let quote: string | null = null;
+      let nesting = 0;
+      for (const character of argsStr) {
+        if (quote) {
+          current += character;
+          if (character === quote) quote = null;
+          continue;
+        }
+        if (character === "'" || character === '"') {
+          quote = character;
+          current += character;
+        } else if (character === '[' || character === '(') {
+          nesting += 1;
+          current += character;
+        } else if (character === ']' || character === ')') {
+          nesting = Math.max(0, nesting - 1);
+          current += character;
+        } else if (character === ',' && nesting === 0) {
+          argPairs.push(current);
+          current = '';
+        } else {
+          current += character;
+        }
+      }
+      if (current.trim()) argPairs.push(current);
 
       for (const pair of argPairs) {
         const [key, ...valueParts] = pair.split('=');

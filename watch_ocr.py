@@ -211,11 +211,14 @@ def main() -> int:
         default=float(os.getenv("PADDLEOCR_RETRY_DELAY", "2")),
         help="OCR 重试间隔秒数，默认 2",
     )
+    default_config = Path(__file__).with_name("ocr_config.local.json")
+    if not default_config.exists():
+        default_config = Path(__file__).with_name("ocr_config.json")
     parser.add_argument(
         "--config",
         type=Path,
-        default=Path(__file__).with_name("ocr_config.json"),
-        help="API 配置文件路径",
+        default=default_config,
+        help="API 配置文件路径；默认优先读取未提交的 ocr_config.local.json",
     )
     args = parser.parse_args()
 

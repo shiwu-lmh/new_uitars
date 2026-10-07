@@ -139,6 +139,14 @@ export class NutJSOperator extends Operator {
     });
 
     logger.info(`[NutjsOperator Position]: (${startX}, ${startY})`);
+    const pointActions = new Set([
+      'click', 'left_click', 'left_single', 'left_double', 'double_click',
+      'right_click', 'right_single', 'middle_click', 'mouse_move', 'hover',
+      'drag', 'left_click_drag', 'select',
+    ]);
+    if (pointActions.has(action_type) && (!Number.isFinite(startX) || !Number.isFinite(startY))) {
+      throw new Error(`Invalid action coordinates for ${action_type}: ${startBoxStr}`);
+    }
 
     // execute configs
     mouse.config.mouseSpeed = 3600;
@@ -279,13 +287,33 @@ export class NutJSOperator extends Operator {
           const stripContent = content.replace(/\\n$/, '').replace(/\n$/, '');
           keyboard.config.autoDelayMs = 0;
           if (process.platform === 'win32') {
-            const originalClipboard = await clipboard.getContent();
-            await clipboard.setContent(stripContent);
-            await keyboard.pressKey(Key.LeftControl, Key.V);
-            await sleep(50);
-            await keyboard.releaseKey(Key.LeftControl, Key.V);
-            await sleep(50);
-            await clipboard.setContent(originalClipboard);
+            // Windows 剪贴板为空或被其他程序占用时，getContent() 可能抛出
+            // ERROR_NOT_FOUND(1168)。输入动作不应因为“无法恢复旧剪贴板”而失败。
+            let originalClipboard: string | null = null;
+            try {
+              originalClipboard = await clipboard.getContent();
+            } catch (error) {
+              logger.warn(
+                `[NutjsOperator] clipboard read failed; continue without restore: ${error instanceof Error ? error.message : String(error)}`,
+              );
+            }
+
+            try {
+              await clipboard.setContent(stripContent);
+              await keyboard.pressKey(Key.LeftControl, Key.V);
+              await sleep(50);
+              await keyboard.releaseKey(Key.LeftControl, Key.V);
+              await sleep(50);
+              if (originalClipboard !== null) {
+                await clipboard.setContent(originalClipboard);
+              }
+            } catch (error) {
+              // 剪贴板工具不可用时，继续使用 NutJS 的真实键盘输入作为兜底。
+              logger.warn(
+                `[NutjsOperator] clipboard paste failed; fallback to keyboard.type: ${error instanceof Error ? error.message : String(error)}`,
+              );
+              await keyboard.type(stripContent);
+            }
           } else {
             await keyboard.type(stripContent);
           }

@@ -375,11 +375,14 @@ def main() -> int:
         "--base-url",
         help="OpenAI 兼容 API 地址；默认读取 ocr_config.json",
     )
+    default_config = Path(__file__).with_name("ocr_config.local.json")
+    if not default_config.exists():
+        default_config = Path(__file__).with_name("ocr_config.json")
     parser.add_argument(
         "--config",
         type=Path,
-        default=Path(__file__).with_name("ocr_config.json"),
-        help="API 配置文件路径",
+        default=default_config,
+        help="API 配置文件路径；默认优先读取未提交的 ocr_config.local.json",
     )
     parser.add_argument(
         "--model",
