@@ -1,0 +1,33 @@
+[
+  {
+    "patient_id": "DEMO-001", "name": "演示患者甲", "birth_date": "1990-01-01", "department": "心内科", "status": "待审核", "risk": "中", "last_updated": "2026-09-28",
+    "records": [
+      {"record_id": "REC-001-A", "type": "门诊", "title": "胸闷门诊评估", "date": "2026-09-01", "priority": "常规", "sections": ["这是本地虚构病例，仅用于复杂 UI-TARS 测试。", "主诉：活动后胸闷，持续两周。", "检查：心电图与实验室结果均为演示文本。", "处理意见：完成身份核对、记录展开和截图审核。"]},
+      {"record_id": "REC-001-B", "type": "随访", "title": "用药随访记录", "date": "2026-09-15", "priority": "重点", "sections": ["第二份虚构记录，用于验证多记录连续处理。", "随访内容：需要滚动到记录底部确认完整内容。", "备注：审核完成后导出本次本地审核摘要。"]},
+      {"record_id": "REC-001-C", "type": "检查", "title": "复查结果汇总", "date": "2026-09-28", "priority": "常规", "sections": ["第三份记录用于验证分页之外的长页面处理。", "结果：所有内容均为演示数据，不代表真实医疗意见。"]}
+    ]
+  },
+  {
+    "patient_id": "DEMO-002", "name": "演示患者乙", "birth_date": "1988-06-15", "department": "神经内科", "status": "已复核", "risk": "低", "last_updated": "2026-09-20",
+    "records": [{"record_id": "REC-002-A", "type": "检查", "title": "头晕检查记录", "date": "2026-09-20", "priority": "常规", "sections": ["第二位虚构患者，用于验证状态筛选和单记录处理。", "检查：页面内容全部为本地演示文字。", "处理意见：截图完成后核对审核状态。"]}]
+  },
+  {
+    "patient_id": "DEMO-003", "name": "演示患者丙", "birth_date": "1979-03-22", "department": "消化内科", "status": "待补充", "risk": "高", "last_updated": "2026-10-01",
+    "records": [
+      {"record_id": "REC-003-A", "type": "急诊", "title": "腹痛急诊记录", "date": "2026-09-30", "priority": "紧急", "sections": ["该任务用于验证高优先级标签识别。", "主诉：急诊场景中的虚构描述。", "处理意见：遇到待补充状态时必须先核对页面提示。"]},
+      {"record_id": "REC-003-B", "type": "检验", "title": "实验室结果", "date": "2026-10-01", "priority": "重点", "sections": ["第二份急诊关联记录，必须展开后再截图。"]}
+    ]
+  },
+  {
+    "patient_id": "DEMO-004", "name": "重复姓名患者", "birth_date": "1985-11-08", "department": "骨科", "status": "待审核", "risk": "中", "last_updated": "2026-09-12",
+    "records": [{"record_id": "REC-004-A", "type": "门诊", "title": "膝关节评估", "date": "2026-09-12", "priority": "常规", "sections": ["同名消歧场景 A：必须同时核对患者编号和出生日期。", "操作要求：不能只凭姓名打开记录。"]}]
+  },
+  {
+    "patient_id": "DEMO-005", "name": "重复姓名患者", "birth_date": "1992-04-19", "department": "骨科", "status": "待审核", "risk": "低", "last_updated": "2026-09-13",
+    "records": [{"record_id": "REC-005-A", "type": "影像", "title": "肩部影像报告", "date": "2026-09-13", "priority": "重点", "sections": ["同名消歧场景 B：与 DEMO-004 姓名相同但出生日期不同。", "操作要求：核对目标编号后再继续审核。"]}]
+  },
+  {
+    "patient_id": "DEMO-006", "name": "演示患者丁", "birth_date": "1968-12-30", "department": "全科", "status": "已归档", "risk": "低", "last_updated": "2026-08-31",
+    "records": [{"record_id": "REC-006-A", "type": "归档", "title": "历史归档记录", "date": "2026-08-31", "priority": "常规", "sections": ["归档场景用于验证状态筛选和只读记录。"]}]
+  }
+]

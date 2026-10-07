@@ -1,0 +1,6 @@
+{
+  "base_url": "https://paddleocr.aistudio-app.com/api/v2/ocr/jobs",
+  "api_mode": "official-api",
+  "model": "PaddleOCR-VL-1.6",
+  "access_token": ""
+}

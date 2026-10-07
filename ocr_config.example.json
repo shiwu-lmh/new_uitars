@@ -1,0 +1,6 @@
+{
+  "base_url": "https://your-ocr-service.example.com/v1",
+  "api_mode": "openai-compatible",
+  "model": "your-model-name",
+  "access_token": ""
+}

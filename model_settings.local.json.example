@@ -1,0 +1,8 @@
+{
+  "vlmBaseUrl": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+  "vlmApiKey": "PASTE_YOUR_DASHSCOPE_API_KEY_HERE",
+  "vlmModelName": "qwen3.8-flash",
+  "useResponsesApi": false,
+  "maxLoopCount": 100,
+  "loopIntervalInMs": 1000
+}

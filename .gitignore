@@ -1,0 +1,47 @@
+# Local secrets and configuration
+ocr_config.local.json
+model_settings.local.json
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Python local files
+__pycache__/
+*.py[cod]
+.venv/
+.idea/
+.ui-tars-user-data/
+.ui-tars-user-data-recovery*/
+.hybrid-chrome-profile/
+*.tsbuildinfo
+UI-TARS-desktop-0.3.0/packages/agent-infra/mcp-servers/browser/tests/__fixtures__/
+
+# Node and build artifacts
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+out/
+**/out/
+.pnpm-store/
+.turbo/
+coverage/
+test-results/
+*.log
+*.log.*
+
+# Local queue state and sensitive record outputs
+名单.csv
+queue/*.sqlite3
+queue/current_task.md
+queue/current_task.id
+medical_records/
+
+# Local screenshots and OCR exports
+screenshots/*
+!screenshots/.gitkeep
+queue/*.md
+queue/*.id
+queue/*
